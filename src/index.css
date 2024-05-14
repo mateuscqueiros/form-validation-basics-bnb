@@ -61,6 +61,11 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input,
+select {
+  @apply p-2 rounded-md w-full
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
