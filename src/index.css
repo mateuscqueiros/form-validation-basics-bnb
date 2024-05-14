@@ -66,6 +66,10 @@ select {
   @apply p-2 rounded-md w-full
 }
 
+input[type="range"] {
+  @apply p-0 w-full
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

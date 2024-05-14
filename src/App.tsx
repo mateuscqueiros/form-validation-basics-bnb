@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import './App.css';
+import { FormItem } from './components/FormItem';
 
 function App() {
   const [name, setName] = useState('Mateus');
   const [value, setValue] = useState(0);
+  const [brand, setBrand] = useState('samsung');
+  const [rating, setRating] = useState(1);
 
   return (
     <form
@@ -13,35 +16,45 @@ function App() {
         console.log({
           name,
           value,
+          brand,
+          rating,
         });
       }}
     >
-      <label className="flex flex-col items-start">
-        <span>Nome</span>
+      <FormItem label="Nome">
         <input
           type="text"
           name="name"
           defaultValue="Mateus"
           onChange={(e) => setName(e.target.value)}
         />
-      </label>
-      <label className="flex flex-col items-start">
-        <span>Valor</span>
+      </FormItem>
+      <FormItem label="Valor">
         <input
           type="number"
           name="value"
           defaultValue={0}
           onChange={(e) => setValue(Number(e.target.value))}
         />
-      </label>
-      <label className="flex flex-col items-start">
-        <span>Marca</span>
-        <select name="brand" onChange={(e) => setValue(Number(e.target.value))}>
+      </FormItem>
+      <FormItem label="Marca">
+        <select name="brand" onChange={(e) => setBrand(e.target.value)}>
           <option value="samsung">Samsung</option>
           <option value="apple">Apple</option>
           <option value="xiaomi">Xiaomi</option>
         </select>
-      </label>
+      </FormItem>
+      <FormItem label="Avaliação">
+        <input
+          type="range"
+          name="rating"
+          defaultValue={1}
+          min={1}
+          max={5}
+          step="0.5"
+          onChange={(e) => setRating(Number(e.target.value))}
+        />
+      </FormItem>
       <button type="submit">Enviar</button>
     </form>
   );
