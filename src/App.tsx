@@ -1,14 +1,21 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 import './App.css';
-import { FormItem } from './components/FormItem';
 import { Modal } from './components/Modal';
-import { ProductFormType, productSchema } from './types';
+import { ProductForm } from './components/ProductForm';
+import { ProductFormType } from './types';
 
 function App() {
+  const [open, setOpen] = useState(true);
+
+  const onSubmit: SubmitHandler<ProductFormType> = (data) => console.log(data);
+
   return (
     <>
-      <Modal />
+      <Modal open={open} setOpen={setOpen} title="Criar produto">
+        <ProductForm onSubmit={onSubmit} />
+      </Modal>
+      <button onClick={() => setOpen(true)}>Open modal</button>
     </>
   );
 }

@@ -1,20 +1,12 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { ProductFormType, productSchema } from '../types';
-import { FormItem } from './FormItem';
+import { IconX } from '@tabler/icons-react';
 
-export function Modal() {
-  const [open, setOpen] = useState(true);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProductFormType>({
-    resolver: zodResolver(productSchema),
-  });
+export type ModalProps = {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  title: string;
+} & React.PropsWithChildren;
 
-  const onSubmit: SubmitHandler<ProductFormType> = (data) => console.log(data);
+export function Modal({ open, setOpen, title, children }: ModalProps) {
   return (
     <div
       id="modal"
@@ -29,51 +21,13 @@ export function Modal() {
         ></div>
         <div className="p-8 bg-teal-900 rounded-lg z-20">
           <div className="relative">
-            <span
+            <IconX
               onClick={() => setOpen(false)}
               className="absolute top-0 right-0 cursor-pointer"
-            >
-              Close
-            </span>
-            <h2>Criar produto</h2>
+            />
+            <h2 className="text-2xl font-bold mb-4">{title}</h2>
           </div>
-          <form
-            className="flex flex-col gap-5 w-[300px]"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <FormItem label="Nome" error={errors.name}>
-              <input
-                type="text"
-                defaultValue="Mateus"
-                {...register('name', { required: 'Este campo é obrigatório' })}
-              />
-            </FormItem>
-            <FormItem label="Valor" error={errors.value}>
-              <input
-                type="number"
-                defaultValue={0}
-                {...register('value', { valueAsNumber: true })}
-              />
-            </FormItem>
-            <FormItem label="Marca" error={errors.brand}>
-              <select {...register('brand')} defaultValue="apple">
-                <option value="samsung">Samsung</option>
-                <option value="apple">Apple</option>
-                <option value="xiaomi">Xiaomi</option>
-              </select>
-            </FormItem>
-            <FormItem label="Avaliação" error={errors.rating}>
-              <input
-                type="range"
-                defaultValue={1}
-                min={1}
-                max={5}
-                step="0.5"
-                {...register('rating', { valueAsNumber: true })}
-              />
-            </FormItem>
-            <button type="submit">Enviar</button>
-          </form>
+          {children}
         </div>
       </div>
     </div>
